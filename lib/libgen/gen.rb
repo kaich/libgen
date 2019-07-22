@@ -9,7 +9,7 @@ module Gen
     end
 
     def self.tmp_dir
-        "/tmp/libgen"  
+        "/tmp/com.app.libgen.747528f1"  
     end
 
     def self.asset_path 
@@ -23,7 +23,7 @@ module Gen
     def self.run
         options = {}
         OptionParser.new do |opts|
-            opts.banner = "Usage: 编译C/C++库为提供安卓/ios所用"
+            opts.banner = "Usage: 编译C/C++库为提供安卓/ios所用， 请自行下载NDK工具包"
 
             opts.on("-o", "--out folder", "输入目录") do |v|
                 options[:out] = v
@@ -44,8 +44,8 @@ module Gen
 
         if file_exist? tmp_dir 
             `rm -rf #{tmp_dir}`
-            `mkdir -p #{tmp_dir}`
         end
+        `mkdir -p #{tmp_dir}`
 
         if !(file_exist?(out_dir) && file_exist?(ndk_dir)) 
             puts "指定的目录不存在".colorize(:red)
