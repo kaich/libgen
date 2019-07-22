@@ -9,7 +9,7 @@ module Gen
     end
 
     def self.tmp_dir
-        "/tmp/libgen"  
+        "/tmp/com.libgen.b0da27552091"  
     end
 
     def self.asset_path 
@@ -36,7 +36,6 @@ module Gen
             opts.on("-l", "--lib lib",Array,"库名称，例如：libpng、x256、libde265、libheif ...") do |v|
                 options[:lib] = v 
             end
-
         end.parse!
 
         out_dir = options[:out] 
@@ -54,6 +53,11 @@ module Gen
         end
 
         lib_type.each do |lib| 
+            if lib == "libheif" 
+                ["x256", "libde265" , "libpng"].each do |dlib|
+                    buildlib out_dir, ndk_dir, dlib 
+                end
+            end
             buildlib out_dir, ndk_dir, lib 
         end
 
@@ -64,6 +68,10 @@ module Gen
         `cp -r -f "#{tmp_dir}/out" "#{out_dir}"`
         puts "任务完成，请查看目标目录".colorize(:green)
         `open #{out_dir}`
+
+        if file_exist? tmp_dir 
+            `rm -rf #{tmp_dir}`
+        end
     end
 
     def self.buildlib(out_dir, ndk_dir, lib) 

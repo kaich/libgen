@@ -26,51 +26,38 @@ then
 	git clone https://github.com/madler/zlib.git -q
 fi
 
-cd $tmp_path/libpng-android/jni
+root_path=$1
+ndk_path=$2
+asset_path=$3
+tmp_path=$root_path/tmp
+to_ndk_path=$tmp_path/android-ndk
 
-
-cd $tmp_path/libpng
-
-for filename in * ; 
-do 
-	if [[ $filename = *.h ]] || [[ $filename = *.c ]] || [[ $filename = "arm" ]];
-	then 
-		if [ -d ./$filename ] 
-		then 
-			cp -f -r $tmp_path/libpng/$filename $tmp_path/libpng-android/jni/ 
-		else 
-			cp -f $tmp_path/libpng/$filename $tmp_path/libpng-android/jni/$filename 
-		fi
-
-	fi
-done
-
-cd $tmp_path/zlib
-
-for filename in * ; 
-do 
-	if [[ $filename = *.h ]] || [[ $filename = *.c ]];
-	then 
-		cp -f $tmp_path/zlib/$filename $tmp_path/libpng-android/jni/$filename 
-	fi
-done
-
-cd $tmp_path/libpng-android/jni
-
-android_content=`cat Application.mk`
-if [[ ! $android_content == *"APP_PLATFORM"* ]] 
-then 
-	echo 'APP_PLATFORM := android-16' >> Application.mk
+if [ ! -e $tmp_path ] 
+then
+	mkdir $tmp_path
 fi
-cp -r $asset_path/Android.mk $tmp_path/libpng-android/jni/Android.mk
+cp -r -n $ndk_path $tmp_path
 
+if [ ! -e $tmp_path/ndk ]
+then 
+	cd $to_ndk_path/build/tools
+	./make_standalone_toolchain.py --arch arm --api 21 --stl libc++ --install-dir $tmp_path/ndk
+fi
 
-cd $tmp_path/libpng-android
-./build.sh
+echo "---------build libpng---------"
+
+cd $tmp_path
+if [ ! -e ./libpng ]
+then
+	git clone https://github.com/glennrp/libpng.git -q
+fi
 
 out_dir=$root_path/out/libpng
-if [ ! -e $out_dir ] 
-then
-	mkdir -p $out_dir 
-fi
-cp -f -r $tmp_path/libpng-android/obj $out_dir
+cd $tmp_path/libpng
+
+export CC=$tmp_path/ndk/bin/arm-linux-androideabi-clang
+export CFLAGS='-fPIE -fno-integrated-as' 
+export LDFLAGS='-fPIE -pie' 
+export PATH=$PATH:$tmp_path/ndk/bin
+./configure --prefix=$out_dir --host=arm-linux-androideabi --enable-shared=no --enable-arm-neon
+make -j8 && make install
