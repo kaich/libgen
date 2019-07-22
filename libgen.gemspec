@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "libgen/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "libgen"
+  spec.name          = "clibgen"
   spec.version       = Libgen::VERSION
   spec.authors       = ["kaich"]
   spec.email         = ["chengkai1853@163.com"]

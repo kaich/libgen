@@ -23,7 +23,7 @@ module Gen
     def self.run
         options = {}
         OptionParser.new do |opts|
-            opts.banner = "Usage: 编译C/C++库为.so提供安卓所用"
+            opts.banner = "Usage: 编译C/C++库为提供安卓/ios所用"
 
             opts.on("-o", "--out folder", "输入目录") do |v|
                 options[:out] = v
