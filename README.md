@@ -13,7 +13,7 @@ install it yourself as:
 ## Usage
 
 ```
-libgen -o ~/Downloads/heifBuild/test -n /Users/mk/Downloads/heifBuild/tmp/android-ndk -l libpng,x256,libde265
+clibgen -o ~/Downloads/heifBuild/test -n /Users/mk/Downloads/heifBuild/tmp/android-ndk -l libpng,x256,libde265
 ```
 
 ## Contributing
