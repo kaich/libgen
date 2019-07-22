@@ -5,7 +5,7 @@ tmp_path=$root_path/tmp
 
 if [ ! -e $tmp_path ] 
 then
-	mkdir $tmp_path
+	mkdir -p $tmp_path
 fi
 
 export PATH=${PATH}:$ndk_path

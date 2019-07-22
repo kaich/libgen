@@ -49,7 +49,7 @@ module Gen
         end
 
         if !(file_exist?(out_dir) && file_exist?(ndk_dir)) 
-            puts "指定的目录不存在:#{path}".colorize(:red)
+            puts "指定的目录不存在".colorize(:red)
             return 
         end
 
