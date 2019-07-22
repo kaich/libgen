@@ -21,7 +21,7 @@ echo "---------build libheif---------"
 cd $tmp_path
 if [ ! -e ./libheif ]
 then 
-	git clone https://github.com/strukturag/libheif
+	git clone https://github.com/strukturag/libheif -q
 fi
 
 cd libheif
@@ -32,7 +32,7 @@ export CXX=$tmp_path/ndk/bin/arm-linux-androideabi-clang++
 export CFLAGS="-fPIE -Wno-tautological-constant-compare"
 export CXXFLAGS="-fPIE -Wno-tautological-constant-compare"
 export LDFLAGS="-fPIE -pie" 
-export PKG_CONFIG_PATH=$tmp_path/out/x265/lib/pkgconfig:/tmp/out/libde265/lib/pkgconfig:$tmp_path/out/libpng/lib/pkgconfig 
+export PKG_CONFIG_PATH=$root_path/out/x265/lib/pkgconfig:$root_path/out/libde265/lib/pkgconfig:$root_path/out/libpng/lib/pkgconfig 
 export PATH=$PATH:$tmp_path/ndk/bin
 
 out_dir=$root_path/out/libheif

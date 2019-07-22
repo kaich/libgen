@@ -63,6 +63,7 @@ module Gen
 
         `cp -r -f "#{tmp_dir}/out" "#{out_dir}"`
         puts "任务完成，请查看目标目录".colorize(:green)
+        `open #{out_dir}`
     end
 
     def self.buildlib(out_dir, ndk_dir, lib) 
