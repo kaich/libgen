@@ -2,34 +2,6 @@ root_path=$1
 ndk_path=$2
 asset_path=$3
 tmp_path=$root_path/tmp
-
-if [ ! -e $tmp_path ] 
-then
-	mkdir -p $tmp_path
-fi
-
-export PATH=${PATH}:$ndk_path
-
-cd $tmp_path
-if [ ! -e ./libpng ]
-then
-	git clone https://github.com/glennrp/libpng.git -q
-fi
-
-if [ ! -e ./libpng-android ]
-then 
-	git clone https://github.com/julienr/libpng-android.git -q
-fi
-
-if [ ! -e ./zlib ]
-then 
-	git clone https://github.com/madler/zlib.git -q
-fi
-
-root_path=$1
-ndk_path=$2
-asset_path=$3
-tmp_path=$root_path/tmp
 to_ndk_path=$tmp_path/android-ndk
 
 if [ ! -e $tmp_path ] 

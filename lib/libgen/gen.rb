@@ -9,7 +9,7 @@ module Gen
     end
 
     def self.tmp_dir
-        "/tmp/com.libgen.b0da27552091"  
+        "/tmp/libgen"  
     end
 
     def self.asset_path 
@@ -44,7 +44,7 @@ module Gen
 
         if file_exist? tmp_dir 
             `rm -rf #{tmp_dir}`
-            `mkdir #{tmp_dir}`
+            `mkdir -p #{tmp_dir}`
         end
 
         if !(file_exist?(out_dir) && file_exist?(ndk_dir)) 
