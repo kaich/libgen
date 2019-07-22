@@ -6,23 +6,15 @@ TODO: Delete this and the text above, and describe your gem
 
 ## Installation
 
-Add this line to your application's Gemfile:
+install it yourself as:
 
-```ruby
-gem 'libgen'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install libgen
+    $ gem install clibgen
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+libgen -o ~/Downloads/heifBuild/test -n /Users/mk/Downloads/heifBuild/tmp/android-ndk -l libpng,x256,libde265
+```
 
 ## Development
 
