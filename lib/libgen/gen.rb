@@ -23,7 +23,7 @@ module Gen
     def self.run
         options = {}
         OptionParser.new do |opts|
-            opts.banner = "Usage: 编译C/C++库为提供安卓/ios所用， 请自行下载NDK工具包"
+            opts.banner = "Usage: 编译C/C++库为提供安卓/ios所用，请自行下载NDK工具包（目前仅支持安卓）"
 
             opts.on("-o", "--out folder", "输入目录") do |v|
                 options[:out] = v
@@ -33,7 +33,7 @@ module Gen
                 options[:ndk] = v 
             end
 
-            opts.on("-l", "--lib lib",Array,"库名称，例如：libpng、x256、libde265、libheif ...") do |v|
+            opts.on("-l", "--lib lib",Array,"库名称，例如：libpng、x265、libde265、libheif ...") do |v|
                 options[:lib] = v 
             end
         end.parse!
@@ -54,7 +54,7 @@ module Gen
 
         lib_type.each do |lib| 
             if lib == "libheif" 
-                ["x256", "libde265" , "libpng"].each do |dlib|
+                ["x265", "libde265" , "libpng"].each do |dlib|
                     buildlib out_dir, ndk_dir, dlib 
                 end
             end
@@ -62,7 +62,7 @@ module Gen
         end
 
         if lib_type.length == 0  
-            puts "请指定 -t，可选为 [libpng、x256、libde265、libheif]"
+            puts "请指定 -t，可选为 [libpng、x265、libde265、libheif]"
         end
 
         `cp -r -f "#{tmp_dir}/out" "#{out_dir}"`

@@ -17,8 +17,6 @@ then
     ./make_standalone_toolchain.py --arch arm --api 21 --stl libc++ --install-dir $toolchain_path
 fi
 
-echo "---------build libheif---------"
-
 cd $tmp_path
 if [ ! -e ./libheif ]
 then 

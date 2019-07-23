@@ -17,11 +17,23 @@ then
     ./make_standalone_toolchain.py --arch arm --api 21 --stl libc++ --install-dir $toolchain_path
 fi
 
-echo "---------build x265-----------"
 cd $tmp_path
 if [ ! -e ./x265 ]
 then 
     git clone https://github.com/videolan/x265 -q
+fi
+
+cd $tmp_path/x265/source/common/
+cpu_content=`cat cpu.cpp`
+replace_str1="void PFX(cpu_neon_test)(void) {}"
+replace_str2="int PFX(cpu_fast_neon_mrc_test)(void) { return 0; }"
+if [[ "$cpu_content" != *$replace_str1* ]]
+then 
+    sed -i '' 's/void PFX(cpu_neon_test)(void);/void PFX(cpu_neon_test)(void) {}/g' "cpu.cpp"
+fi
+if [[ "$cpu_content" != *$replace_str2* ]]
+then
+    sed -i '' 's/int PFX(cpu_fast_neon_mrc_test)(void);/int PFX(cpu_fast_neon_mrc_test)(void) { return 0; }/g' 'cpu.cpp'
 fi
 
 out_dir=$root_path/out/x265
